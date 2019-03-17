@@ -23,14 +23,18 @@ public class DeleteInstructor {
             System.out.println(tempInstructor);
             System.out.println(tempDetails);
 
-            if (tempInstructor!=null) {
+
                 System.out.println("Delete instructor"
                         + tempInstructor.getFirstName()
                         + " " + tempInstructor.getLastName());
                 session.delete(tempInstructor);
-            }
+
             session.getTransaction().commit();
-        } finally {
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
             session.close();
             factory.close();
         }
