@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class CreateInstructor {
+public class DeleteInstructor {
     public static void main(String[] args) {
         SessionFactory factory = new Configuration()
                 .configure("hibernate.cfg.xml")
@@ -17,14 +17,21 @@ public class CreateInstructor {
         Session session = factory.getCurrentSession();
 
         try {
-            Instructor tempInstructor = new Instructor("Leo", "Max", "Leo.Max@gmail.com");
-            InstructorDetail tempDetails = new InstructorDetail("rutube.com", "make vider");
-            tempInstructor.setInstructorDetail(tempDetails);
-
             session.beginTransaction();
-            session.save(tempInstructor);
+            Instructor tempInstructor = session.get(Instructor.class, 6753);
+            InstructorDetail tempDetails = tempInstructor.getInstructorDetail();
+            System.out.println(tempInstructor);
+            System.out.println(tempDetails);
+
+            if (tempInstructor!=null) {
+                System.out.println("Delete instructor"
+                        + tempInstructor.getFirstName()
+                        + " " + tempInstructor.getLastName());
+                session.delete(tempInstructor);
+            }
             session.getTransaction().commit();
         } finally {
+            session.close();
             factory.close();
         }
     }
