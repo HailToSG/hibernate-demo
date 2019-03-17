@@ -9,6 +9,8 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    Course(){}
+
     public Course(String title, Instructor instructor) {
         this.title = title;
         this.instructor = instructor;

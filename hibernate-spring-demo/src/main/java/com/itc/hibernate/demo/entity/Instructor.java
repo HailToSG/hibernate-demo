@@ -98,9 +98,10 @@ public class Instructor {
             CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Course> courses;
 
-    private void addCourse (Course aCourse){
+    private void addCourse (Course course){
         if (courses == null){
             courses = new ArrayList<>();
         }
+        courses.add(course);
     }
 }
