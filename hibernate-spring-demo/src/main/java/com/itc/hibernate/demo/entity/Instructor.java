@@ -85,7 +85,7 @@ public class Instructor {
     @JoinColumn(name = "instructor_detail_id")
     private InstructorDetail instructorDetail;
 
-    public List<Course> getCourses() {
+    private List<Course> getCourses() {
         return courses;
     }
 
@@ -96,12 +96,9 @@ public class Instructor {
     @OneToMany(mappedBy = "instructor",
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Course> courses;
+    private List<Course> courses = new ArrayList<>();
 
-    private void addCourse (Course course){
-        if (courses == null){
-            courses = new ArrayList<>();
-        }
+    public void addCourse (Course course){
         courses.add(course);
     }
 }

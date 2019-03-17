@@ -5,11 +5,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "course")
 public class Course {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    Course(){}
+    public Course(){}
 
     public Course(String title) {
         this.title = title;
