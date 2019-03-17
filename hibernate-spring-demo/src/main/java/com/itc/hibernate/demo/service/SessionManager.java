@@ -15,4 +15,9 @@ public class SessionManager {
     }
     Session session;
     SessionFactory factory;
+
+    public void closeSectionAndFactory(){
+        session.close();
+        factory.close();
+    }
 }

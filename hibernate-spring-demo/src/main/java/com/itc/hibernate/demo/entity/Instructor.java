@@ -1,6 +1,8 @@
 package com.itc.hibernate.demo.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "instructor")
@@ -66,6 +68,7 @@ public class Instructor {
                 ", lastName='" + lastName + '\'' +
                 ", eMail='" + eMail + '\'' +
                 ", instructorDetail=" + instructorDetail +
+                ", courses=" + courses +
                 '}';
     }
 
@@ -79,6 +82,25 @@ public class Instructor {
     private String eMail;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn( name = "instructor_detail_id")
+    @JoinColumn(name = "instructor_detail_id")
     private InstructorDetail instructorDetail;
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    @OneToMany(mappedBy = "instructor",
+            cascade = {CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Course> courses;
+
+    private void addCourse (Course aCourse){
+        if (courses == null){
+            courses = new ArrayList<>();
+        }
+    }
 }
