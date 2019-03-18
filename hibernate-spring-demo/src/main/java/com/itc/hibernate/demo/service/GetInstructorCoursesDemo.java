@@ -6,21 +6,19 @@ import com.itc.hibernate.demo.entity.InstructorDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-public class CreateInstructor {
+public class GetInstructorCoursesDemo {
     public static void main(String[] args) {
         SessionManager manager = new SessionManager("hibernate.cfg.xml",
                 Instructor.class, InstructorDetail.class, Course.class);
 
         try (SessionFactory factory = manager.factory; Session session = manager.session){
-            Instructor tempInstructor = new Instructor("s", "fse", "fgdd");
-            InstructorDetail tempDetails = new InstructorDetail("fs", "nfsdf");
-            Course course = new Course("daw2");
-            tempInstructor.setInstructorDetail(tempDetails);
-            tempInstructor.addCourse(course);
+            Instructor instructor;
 
             session.beginTransaction();
-            session.save(tempInstructor);
-            session.save(course);
+            instructor  = session.get(Instructor.class, 1);
+            for (Course course : (instructor.getCourses())) {
+                System.out.println(course);
+            }
             session.getTransaction().commit();
         }
     }

@@ -16,6 +16,40 @@ public class Instructor {
         this.eMail = eMail;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Override
+    public String toString() {
+        return "Instructor{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", eMail='" + eMail + '\'' +
+                ", instructorDetail=" + instructorDetail +
+                ", courses=" + courses +
+                '}';
+    }
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "eMail")
+    private String eMail;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "instructor_detail_id")
+    private InstructorDetail instructorDetail;
+
+    @OneToMany(mappedBy = "instructor",
+            cascade = {CascadeType.DETACH, CascadeType.MERGE,
+                    CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Course> courses;
+
     public int getId() {
         return id;
     }
@@ -56,36 +90,7 @@ public class Instructor {
         this.instructorDetail = instructorDetail;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-
-    @Override
-    public String toString() {
-        return "Instructor{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", eMail='" + eMail + '\'' +
-                ", instructorDetail=" + instructorDetail +
-                ", courses=" + courses +
-                '}';
-    }
-
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "eMail")
-    private String eMail;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "instructor_detail_id")
-    private InstructorDetail instructorDetail;
-
-    private List<Course> getCourses() {
+    public List<Course> getCourses() {
         return courses;
     }
 
@@ -93,12 +98,11 @@ public class Instructor {
         this.courses = courses;
     }
 
-    @OneToMany(mappedBy = "instructor",
-            cascade = {CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Course> courses = new ArrayList<>();
-
     public void addCourse (Course course){
+        if (courses == null){
+            courses = new ArrayList<>();
+        }
         courses.add(course);
+        course.setInstructor(this);
     }
 }

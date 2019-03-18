@@ -1,14 +1,11 @@
 package com.itc.hibernate.demo.entity;
 
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "course")
 public class Course {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
     public Course(){}
 
@@ -16,12 +13,15 @@ public class Course {
         this.title = title;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
     @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", instructor=" + instructor +
                 '}';
     }
 
