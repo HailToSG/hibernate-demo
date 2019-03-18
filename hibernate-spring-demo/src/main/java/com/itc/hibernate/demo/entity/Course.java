@@ -2,6 +2,8 @@ package com.itc.hibernate.demo.entity;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "course")
@@ -28,6 +30,21 @@ public class Course {
     @Column(name = "title")
     private String title;
 
+    @ManyToOne(cascade = {
+            CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH
+    })
+    @JoinColumn(name = "instructor_id")
+    private Instructor instructor;
+
+    @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    List<Review> reviews = new ArrayList<>();
+
+    public void addReview (Review review){
+        reviews.add(review);
+    }
+
     public int getId() {
         return id;
     }
@@ -51,11 +68,4 @@ public class Course {
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
     }
-
-    @ManyToOne(cascade = {
-            CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.PERSIST, CascadeType.REFRESH
-    })
-    @JoinColumn(name = "instructor_id")
-    private Instructor instructor;
 }
