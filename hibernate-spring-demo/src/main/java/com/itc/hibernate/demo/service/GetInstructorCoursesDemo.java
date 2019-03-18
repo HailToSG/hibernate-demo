@@ -6,6 +6,8 @@ import com.itc.hibernate.demo.entity.InstructorDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.util.List;
+
 public class GetInstructorCoursesDemo {
     public static void main(String[] args) {
         SessionManager manager = new SessionManager("hibernate.cfg.xml",
@@ -16,7 +18,8 @@ public class GetInstructorCoursesDemo {
 
             session.beginTransaction();
             instructor  = session.get(Instructor.class, 1);
-            for (Course course : (instructor.getCourses())) {
+            List<Course> allInstructorCourses = instructor.getCourses();
+            for (Course course : (allInstructorCourses)) {
                 System.out.println(course);
             }
             session.getTransaction().commit();
