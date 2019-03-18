@@ -5,6 +5,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "review")
 public class Review {
+    public Review() {
+    }
+
+    public Review(String comment) {
+        Comment = comment;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +33,13 @@ public class Review {
 
     public void setComment(String comment) {
         Comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", Comment='" + Comment + '\'' +
+                '}';
     }
 }

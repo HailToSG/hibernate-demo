@@ -41,11 +41,11 @@ public class Instructor {
     @Column(name = "eMail")
     private String eMail;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_detail_id")
     private InstructorDetail instructorDetail;
 
-    @OneToMany(mappedBy = "instructor",
+    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
                     CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Course> courses;
